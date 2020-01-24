@@ -8,34 +8,36 @@
 % reconstructed functions with the expected ones.                              % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%
+% clc;
+% clear;
+% close all;
+%%
 % Parameters 
-N = 50; 
-s = flip(1./(2*(10:10:200))); 
-r2 = 1; 
-r3 = 0; 
-r4 = 0; 
-Tint = 50;
+% N = 50; 
+% s = flip(1./(2*(10:10:200))); 
+% r2 = 1; 
+% r3 = 0; 
+% r4 = 0; 
+% Dt = 1:20:200;
+% Tint = 50;
+%%
 opt_Dt = zeros(length(s),1);
-est_tau = zeros(length(s),1);
-
-if r3 == 0
-    address = '~/Documents/RSPhilTran/submit/Characterizing_noise/pairwise/optimalDt/varyingN/';
-else
-    address = '~/Documents/RSPhilTran/submit/Characterizing_noise/ternary/optimalDt/varyingN/';
-end
-
-Dt = 1:1:200;
+% est_tau = zeros(length(s),1);
+%%
 % Dt = [1,Dt];
 Drift = cell(length(Dt),1);
 Diffusion = Drift; Diffusion_mod = Drift;
 dist_drift = zeros(length(Dt),1); dist_diff = dist_drift;
 
 for j = 1:length(s)
-    r1 = s;
+    j
+    r1 = s(j);
     [tSample,S] = GS_runner1D(N,r1,r2,r3,r4,Tint);
     
     % calculated drift diffusion for different Dt for same time series and store them in cell array 
     for i = 1:length(Dt)
+        i
         T_int = 1;
         [Diffusion_temp,Diffusion_mod_temp,Drift_temp,op] = driftAndDiffusion_const_time(S,T_int,Dt(i));
         Drift{i,1} = Drift_temp;
@@ -62,24 +64,14 @@ for j = 1:length(s)
     %Find optimal Dt and store
     [M,I] = min(dist_drift);
     opt_Dt(j) = I;
-    
-    %calculate correlation time for single time series and store
-     t_lag = 1000;
-     S(isnan(S)) = 0;
-     acf = autocorr(S',t_lag);
-     t_lag = (1:t_lag+1);
-     t_lag = t_lag';
-     idx = find(~isnan(acf));
-     f = fit(t_lag(idx),acf(idx),'exp1');
-     val = coeffvalues(f);
-     b = val(1,2);
-     a = val(1,1);
-     ct = -1*ceil(1/b);
- %     t_acf = tSample(1:length(t_lag));
-     est_tau(j) = tSample(ct);
 end
-save([address 'opt_Dt_changing_N'],'opt_Dt');
-save([address 'est_tau_interp_r1'],'est_tau');
+est_tau = 1./(2.*s);
+% save('opt_Dt_changing_N','opt_Dt', 'est_tau');
+% save('est_tau_interp_r1','est_tau');
+%%
+% est_tau = 1./(2.*s);
+% figure, 
+% scatter(est_tau,opt_Dt);
 
 
 

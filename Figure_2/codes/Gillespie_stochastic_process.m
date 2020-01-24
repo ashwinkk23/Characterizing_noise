@@ -6,48 +6,43 @@
 % switch between their states via. different kinds of reactions/interactions.  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+%%
+% clc;
+% clear;
+% close all;
+%%
 tic
+%% Parameters 
+% % Population size
+% N = 50; 
+% % spontaneous reaction rate
+% r1 = 0.01; 
+% % pairwise reaction rate
+% r2 = 1;  
+% % Ternary reaction rate  
+% r3 = 0.08; 
+% % pairwise negative reaction rate
+% r4 = 0; 
+%realizations/repetitions of the simulations
+rel = 1; 
+% Sampling time (Time after which system's state would be stored)
+Tint = 50;%ceil((r2+r3+r4)/((N^0.5)*r1)); 
+% Simulation time. I have kept it as a function of sampling time.
+Tend = ceil(Tint*1e5);
+%%
 % Number of reactions at individual level
 mu  = 8; 
-
-% Population size
-N = 200; 
-
 %Array to store reaction rates propensities
 C = zeros(mu,1); 
-
 %Array to store reaction propensities at the given time
 A = C; 
-
-% spontaneous reaction rate
-r1 = 0.01; 
-
-% pairwise reaction rate
-r2 = 1;  
-
-% Ternary reaction rate  
-r3 = 0.08; 
-
-% pairwise negative reaction rate
-r4 = 0; 
- 
 C(1:2) = r1;
 C(3:4) = r2;
 C(5:6) = r3;
 C(7:8) = r4;
-
-% Sampling time (Time after which system's state would be stored)
-Tint = 50;%ceil((r2+r3+r4)/((N^0.5)*r1)); 
-
-% Simulation time. I have kept it as a function of sampling time.
-Tend = ceil(Tint*1000000);
-
+%%
 % Size of array to store system's state. Usually this will exceed the actual steps it Tint > 1  
 steps = floor(Tend); 
-
-%realizations/repetitions of the simulations
-rel = 1; 
    
 %Arrays to store system's state and time for different realizations
 S = zeros(steps,rel);
@@ -155,73 +150,22 @@ elseif length(m) == 1
     exp_tau = 1/(2*r1);
 end
     
-%% Plotting
-% figure,
-% plot (tSample(:,iter),S1(:,iter))
-% xlabel('time')
-% ylabel('Polarization')
-% hold on
-% plot(tSample(:,iter),S2(:,iter))
-% hold on
-% plot(tSample(:,iter),sum_all(:,iter))
-% ylim([0,sum_all(1,1)+0.1*sum_all(1,1)])
-%
-
 %% Plotting time series of polarization and histogram
-figure,
-subplot(2,1,1)
-plot(tSample(:,iter),S(:,iter))
-xlabel('Time','fontSize',16,'fontWeight','bold')
-ylabel('Polarization (X)','fontSize',16,'fontWeight','bold')
-% xlim([0,1000])
-
-subplot(2,1,2)
-nbins=40;
-histogram(S(:),nbins)
-xlabel('Polarization (X)','fontSize',16,'fontWeight','bold')
-ylabel('Frequency','fontSize',16,'fontWeight','bold')
-xlim([-1 1])
-%%
-% X = S(:,iter);
-% time = tSample(:,iter);
-% noise = underlyingNoise(X,time,1,0.5,0.01);
-% pd = fitdist(noise,'Normal');
-% x_values = min(noise):0.01:max(noise);
-% y = pdf(pd,x_values);
 % figure,
-% plot(x_values,y,'LineWidth',2)
-% hold on
-% histogram((noise),100,'Normalization','pdf')
-% S_res = interp1(tSample,S,min(tSample):1:max(tSample),'previous');
-% figure,
+% subplot(2,1,1)
+% plot(tSample(:,iter),S(:,iter))
+% xlabel('Time','fontSize',16,'fontWeight','bold')
+% ylabel('Polarization (X)','fontSize',16,'fontWeight','bold')
+% % xlim([0,1000])
+% 
+% subplot(2,1,2)
 % nbins=40;
-% % t_samp = 300;
-% histogram(S_res,nbins)
+% histogram(S(:),nbins)
 % xlabel('Polarization (X)','fontSize',16,'fontWeight','bold')
 % ylabel('Frequency','fontSize',16,'fontWeight','bold')
 % xlim([-1 1])
 %%
-% i = 1:length(tSample)-1;
-% reac_time = tSample(i+1)-tSample(i);
-% bins = 1:0.1:20;
-% figure,
-% histogram(reac_time50,bins,'Normalization','Probability')
-% hold on 
-% histogram(reac_time200,bins,'Normalization','Probability')
-% legend('N = 50','N = 200')
-% xlim([0.1 10])
-% t_lag = 1000;
-%     S_res(isnan(S_res)) = 0;
-%     acf = autocorr(S_res',t_lag);
-%     t_lag = (1:t_lag+1);
-%     t_lag = t_lag';
-%     idx = find(~isnan(acf));
-%     f = fit(t_lag(idx),acf(idx),'exp1');
-%     val = coeffvalues(f);
-%     b = val(1,2);
-%     a = val(1,1);
-%     ct = -1*ceil(1/b);
-%     t_acf = tSample(1:length(t_lag));
-%     est_tau = tSample(ct);
+
 toc
+% save('Gillespie_stochastic_process_output.mat', 'tSample', 'S', 'r1', 'r2', 'r3', 'r4', 'N'); 
 
