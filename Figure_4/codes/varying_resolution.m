@@ -1,17 +1,24 @@
-N = 200; r1 = 0.01; r2 = 1; r3 = 0; r4 = 0; res = 1:5:500;
+%%
+% clc;
+% clear;
+% close all;
+%%
+% N = 200; 
+% r1 = 0.01; 
+% r2 = 1; 
+% r3 = 0; 
+% r4 = 0; 
+% res = 1:5:200;
+%%
 Diffusion_distance = zeros(length(res),1);
 Drift_distance = zeros(length(res),1);
-if r3 == 0
-    address = ['~/Documents/RSPhilTran/submit/Characterizing_noise/pairwise/varying_resolution/N_' num2str(N) '/'];
-else
-    address = ['~/Documents/RSPhilTran/submit/Characterizing_noise/ternary/varying_resolution/N_' num2str(N) '/'];
-end
 Dt = 1;
 % Dt = [1,Dt];
 Drift = cell(length(Dt),1);
 Diffusion = Drift; Diffusion_mod = Drift;
 dist_drift = zeros(length(Dt),1); dist_diff = dist_drift;
 for j = 1:length(res)
+    j
     Tint = res(j);
     for i = 1:length(Dt)
         [tSample,S] = GS_runner1D(N,r1,r2,r3,r4,Tint);
@@ -37,6 +44,7 @@ for j = 1:length(res)
     Diffusion_distance(j) = dist_diff;
     Drift_distance(j) = dist_drift;
 end
-save([address 'Diffusion_distance'],'Diffusion_distance');
-save([address 'Drift_distance'],'Drift_distance');
-save([address 'resolution'],'res');
+%%
+%save('varying_resolution_N_200.mat','Diffusion_distance','res');
+% save('Drift_distance','Drift_distance');
+% save('resolution','res');

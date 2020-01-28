@@ -7,9 +7,14 @@ end
 tr = 0.5;
 sz = 80;
 mark_style = {'p','+','*','d','s','o','.','t', 'x', 'square', 'diamond', 'v', '^', '>', '<', 'pentagram'};
+legend_font_size = 5;
 %%
 % Plotting drift for different time scales (Figure 2E & 2F)
-figure,
+if r3 == 0
+    subplot(4,2,5);
+else
+    subplot(4,2,6);
+end
 scatter(op,Drift{1,1},sz,mark_style{1})
 for i = 2:length(Dt)
     hold on
@@ -24,16 +29,21 @@ hline.Color = [0.1,0.1,0.1];
 % xlabel('Polarization (X)','fontSize',16,'fontWeight','bold')
 % ylabel('Drift (f(X))','fontSize',16,'fontWeight','bold')
 % ylim([-0.02 0.02])
-legend([lgd_parm 'Expected'],'Location','NorthEast')
+lgd = legend([lgd_parm 'Expected'],'Location','NorthEast');
+lgd.FontSize = legend_font_size;
 if r3 == 0
     title('Figure 2E');
 else
     title('Figure 2F'); 
 end
-
 %%
 % Plotting diffusion (modified formula used in the paper) for different time scales (Figure 2G & 2H)
-figure,
+%figure;
+if r3 == 0
+    subplot(4,2,7);
+else
+    subplot(4,2,8);
+end
 scatter(op,Diffusion_mod{1,1},sz,mark_style{1})
 for i = 2:length(Dt)
     hold on
@@ -45,7 +55,8 @@ plot(op,exp_diff,'Black','lineWidth',2)
 % ylabel('Diffusion (g^2(X))','fontSize',16,'fontWeight','bold')
 xlim([-1 1])
 % ylim([0.0 0.045])
-legend([lgd_parm 'Expected'],'Location','NorthEast')
+lgd = legend([lgd_parm 'Expected'],'Location','NorthEast');
+lgd.FontSize = legend_font_size;
 if r3 == 0
     title('Figure 2G');
 else
@@ -53,9 +64,14 @@ else
 end
 %%
 %Plot time series of data (Figure 2A and 2B)
-figure,
+%figure,
+if r3 == 0
+    subplot(4,2,1);
+else
+    subplot(4,2,2);
+end
 plot(tSample,S)
-xlim([20 200])
+xlim([0 3000])
 ylim([-1 1])
 if r3 == 0
     title('Figure 2A');
@@ -65,12 +81,18 @@ end
 
 %%
 % Plot pdf of data and the analytically expected pdf (Figure 2C and 2D). Uncomment 170-176 for the red curve.
-figure,
+%figure,
+if r3 == 0
+    subplot(4,2,3);
+else
+    subplot(4,2,4);
+end
 [f,xi] = ksdensity(S(1000:end));
 plot(xi,f,'LineWidth',2)
 xlim([-1 1])
 % ylim([0 1.2])
-legend('GS','Location','north');
+lgd = legend('GS','Location','north');
+lgd.FontSize = legend_font_size;
 if r3 == 0
     title('Figure 2C');
 else

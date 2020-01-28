@@ -35,12 +35,12 @@ end
 % %     end
 % end
 %%
-figure,
-scatter(N,tau_mean,50,'Filled')
+%figure,
+%scatter(N,tau_mean,50,'Filled')
 % scatter(s,tau_varying_s,50,'Filled')
 % hold on
 % plot(s,exp_tau_new,'LineWidth',2)
-ylim([0 200])
+%ylim([0 200])
 % hline = refline([0 50]);
 % hline.Color = 'r';
 % hline.LineWidth = 2;
@@ -48,10 +48,10 @@ ylim([0 200])
 % xlim([0.0025 0.05])
 %%
 % tau = tau_mean(N);
-figure,
-scatter(s,tau_mean,80,'filled')
+%figure,
+%scatter(s,tau_mean,80,'filled')
 % ylim([1 16])
 % xlim([0 100])
 %%
-figure,scatter(N,opt_Dt,60,'filled')
-ylim([0 50])
+%figure,scatter(N,opt_Dt,60,'filled')
+%ylim([0 50])

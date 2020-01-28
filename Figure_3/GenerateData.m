@@ -41,7 +41,7 @@ r3 = 0.08;
 r4 = 0; 
 Dt = 1:1:150;
 for N = N_list
-    disp(strcat('Running Gillispie Stocastic Process Trenary Model for N = ', num2str(N)));
+    disp(strcat('Running Gillispie Stocastic Process Ternary Model for N = ', num2str(N)));
     Gillespie_stochastic_process
     save(['data/', 'Gillespie_stochastic_process_ternary_output_N_', num2str(N), '_.mat'], 'tSample', 'S', 'r1', 'r2', 'r3', 'r4', 'N');
     
@@ -74,9 +74,9 @@ Tint = 50;
 Dt = 1:1:200;
 disp('Running optDt for chnaging N');
 optDt_changing_N
-save(['data/', 'opt_Dt_changing_N.mat'], 'opt_Dt');
+save(['data/', 'opt_Dt_changing_N_mod_GS_Runner.mat'], 'opt_Dt');
 disp('Etimating est_tau');
-% tic
-% SDE_varying_system_size
-% toc
-% save(['data/', 'SDE_varying_system_size_est_tau_mean.mat'],'tau_mean');
+tic
+SDE_varying_system_size
+toc
+save(['data/', 'SDE_varying_system_size_est_tau_mean.mat'],'tau_mean');
