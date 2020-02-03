@@ -1,47 +1,33 @@
+
 # Characterizing_noise
 
-## This repository contains codes and data used for analysis in the article "Noise-Induced Effects in Collective Dynamics and Inferring Interactions from Data".
+> Pairwise Model SDE: $\frac{dm}{dt} = -2r_1m+\frac{1}{\sqrt{N}}\sqrt{2r_1+(1-m^2)r_2 }\eta(t)$
 
-# Codes for Figure 2
+> Ternary Model SDE: $\frac{dm}{dt} = -2r_1m +\frac{r_3}{2}m(1-m^2)+\frac{1}{\sqrt{N}}\sqrt{2r_1+r_2+\frac{r_3}{2}(1-m^2)}\eta(t)$
 
-1. **Generate polarisation time-series for a given set of parameters:** A matlab code (__/Figure_2/Gillespie_stochastic_process.m__) can be used to compute the polarization/order parameter.
-	1. The important parameters that need to be set are N (system size), r1, r2, r3, r4 (which are for different reaction rates).
-		1. N = 50, 100, 200; r1 = 0.01; r2 = 1; r3 = 0 (for pairwise model) & 0.08 (for ternay model)
-	2. Other parameters include Tint, Tend.
-		1. Tint = 50; 
-		2. Tend = Tint*Number of iterations. Set number of iterations in this formula to 1000000.
-	3. Parameter rel is for number of realizations/replicates of the simulations. 
-		1. Set rel >= 1. For 1 realization with 1 million iterations may take around 10-15 mins. **If the system is out of memory reduce the number of iterations.**
-	4. The output is a time series array (S) of size (number of iterations*rel), and an array (tSample) storing system time.
-	5. Autocorrelation time of the time series (est_tau) can be calculated. exp_tau is the expected autocorrealtion time for the given reaction rate and system size parameters.
-	
-2. **Reconstruct Deterministic and Stochastic part from time series:** A matlab code (__/Figure_2/SDE_different_Dt.m__) can be used to reconstruct the underlying functions from the time series for different time scales. This code can generate all plots in Figure 2 of the main text of the paper.
-	1. Run one column of the time series array (for e.g., S(:,1)) at a time on this code.
-	2. In line 8: Set different time scales over which you want to calculate the deterministic and the stochastic part.
-	3. Uncomment line 33 and set the exact parameters used to generate the time series using code __/Figure_2/Gillespie_stochastic_process.m__
-	4. The code uses tSample from the code __/Figure_2/Gillespie_stochastic_process.m__ (or from real data) for calculaing Tint in line 35. One can also set Tint manually here.
-	5. Plotting begins from line 76.
-	
-# Codes for Figure 3
+### This repository contains codes and data used for analysis in the article "Noise-Induced Effects in Collective Dynamics and Inferring Interactions from Data".
 
-1. **Figure 3A and B:** Run the previous code (__/Figure_2/SDE_different_Dt.m__) to generate plots for Distance between the expected and the derived Deterministic function for pairwise model (r3 = 0) and the ternary model (r3 = 0.08), as a function of a more continuous $\Delta t$.
-2. **Figure 3C:** Run __/Figure_3/optDt_changing_r1.m__ to generate the data for the figure (r1 = s = flip(1./(2*(10:10:200))), r2 = 1, r3 = 0.08, N = size = 50) and use plot or scatter command in matlab to plot optimal Dt vs Correlation time.
-3. **Figure 3D:** Run __/Figure_3optDt_changingN.m__ to generate the data for the figure (r1 = 0.01, r2 = 1, r3 = 0.08, N = size = 50:1:200) and use plot or scatter command in matlab to plot optimal Dt vs Correlation time.
+### To generate the data required to plot the figures, run GenerateData.m.  PlotData.m plots and generates subplots containing all sub figures.
 
-# Codes for Figure 4
+## Overview of codes
+### ``Gillespie_stochastic_process.m``
+>This code simulates a stochastic process using the standard algorithm presented by Sir D Gillespie, 1976. The process simulates the evolution of temporal dynamics of consensus in a population that contains individuals in two states. These individuals switch between their states via. different kinds of reactions/interactions.
+### ``GS_runner1D.m``
+>This contains function that runs Gillespie stochastic process.
+### ``driftAndDiffusion_const_time.m``
+>This code calculates the drift and diffusion constant between the expected and simulated data for a given  
+$\Delta$t.   
+### ``SDE_continuous_Dt.m``
+>This code uses a time series data and calculates the underlying deterministic and the stochastic coefficients for continuous time scales.
+### ``SDE_different_Dt.m``
+>This code uses a time series data and calculates the underlying deterministic and the stochastic coefficients for different time scales.
 
-1. **Figure 4A:** 
-	1. Use code __/Figure_2/Gillespie_stochastic_process.m__ to generate three time series for the pairwise model (r1 = 0.01, r2 = 1, r3 = 0) for N = 50, 100 and 200.
-	2. Run each of these time series on code __/Figure_2/SDE_different_Dt.m__ to calculate Distance between the expected and the derived Stochastic function as a function of $\delta t$.
-2. **Figure 4B:**
-	1. Use code __/Figure_4/varying_resolution.m__ to generate time series with different resolution. Set r1 = 0.01, r2 = 1, r3 = 0 for the pairwise model.
-	2. Perform the above step for different N (50, 100, 200). The outputs will be stored in the folder __Characterizing_noise/pairwise/varying_resolution/N_15__, for example. 
-3. **Figure 4C**
-	1. Perform the steps to generate Figure 4A for the ternary models case (r1 = 0.01, r2 = 1, r3 = 0.08).
-4. **Figure 4D**
-	1. Perform the steps in Figure 4B for the ternary models case (r1 = 0.01, r2 = 1, r3 = 0.08).
-5. **Figure 4E and 4F**
-	1. Generate a time series using code __/Figure_2/Gillespie_stochastic_process.m__ with Tint = 10 and 50 for the pairwise model (r1 = 0.01, r2 = 1, r3 = 0) for N = 50.
-	2. Run these time series on code __/Figure4/noise_analysis.m__ to get the plots 4E and 4F.
-6. **Figure 4G and 4H**
-	1. Perform the steps used to generate Figure 4E and 4F for the ternary model case ((r1 = 0.01, r2 = 1, r3 = 0.08)) for N = 50.
+### ``optDt_changing_r1.m``
+>Similar to ``Gillespie_stochastic_process.m`` and ``GS_runner1D.m``, this code simulates the stochastic process using the same standard algorithm. Following this, we also derive the underlying SDE from data and compare the reconstructed functions with the expected ones by varying the pairwise interaction rates.
+### ``optDt_changing_N.m``
+>This code does a similar analysis like the one done by the above mentioned code for ternary interaction by varying the system size (N).
+### ``varying_resolution.m``
+>The code simulates the Gillespie process for a given system by varying the time interval $\delta$t, and returns the RMS mean of the difference between the expected drift and that for simulated data.
+### `` underlyingNoise.m`` 
+>A function that calculates the underlying noise in the given signal, based on the using the stochastic part of the derived SDE. This is done to verify if the noise in the signal is Gaussian in nature.
+
