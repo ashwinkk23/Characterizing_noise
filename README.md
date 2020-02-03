@@ -1,4 +1,4 @@
-
+![Characterizing Noise](https://raw.githubusercontent.com/ashwinkk23/Characterizing_noise/master/.fig.jpg)
 # Characterizing_noise
 
 > Pairwise Model SDE: $\frac{dm}{dt} = -2r_1m+\frac{1}{\sqrt{N}}\sqrt{2r_1+(1-m^2)r_2 }\eta(t)$
