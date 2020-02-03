@@ -18,7 +18,7 @@ Ternary Model SDE:
 >This contains function that runs Gillespie stochastic process.
 ### ``driftAndDiffusion_const_time.m``
 >This code calculates the drift and diffusion constant between the expected and simulated data for a given  
-$\Delta$t.   
+&#x394;t.   
 ### ``SDE_continuous_Dt.m``
 >This code uses a time series data and calculates the underlying deterministic and the stochastic coefficients for continuous time scales.
 ### ``SDE_different_Dt.m``
@@ -29,7 +29,7 @@ $\Delta$t.
 ### ``optDt_changing_N.m``
 >This code does a similar analysis like the one done by the above mentioned code for ternary interaction by varying the system size (N).
 ### ``varying_resolution.m``
->The code simulates the Gillespie process for a given system by varying the time interval $\delta$t, and returns the RMS mean of the difference between the expected drift and that for simulated data.
+>The code simulates the Gillespie process for a given system by varying the time interval &#948;t, and returns the RMS mean of the difference between the expected drift and that for simulated data.
 ### `` underlyingNoise.m`` 
 >A function that calculates the underlying noise in the given signal, based on the using the stochastic part of the derived SDE. This is done to verify if the noise in the signal is Gaussian in nature.
 
