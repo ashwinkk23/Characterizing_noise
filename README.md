@@ -1,9 +1,11 @@
 ![Characterizing Noise](https://raw.githubusercontent.com/ashwinkk23/Characterizing_noise/master/.fig.jpg)
 # Characterizing_noise
 
-> Pairwise Model SDE: $\frac{dm}{dt} = -2r_1m+\frac{1}{\sqrt{N}}\sqrt{2r_1+(1-m^2)r_2 }\eta(t)$
+Pairwise Model SDE: 
+>![equation](https://latex.codecogs.com/svg.latex?\Large&space;\frac{dm}{dt}%20=%20-2r_1m+\frac{1}{\sqrt{N}}\sqrt{2r_1+(1-m^2)r_2%20}\eta(t))
 
-> Ternary Model SDE: $\frac{dm}{dt} = -2r_1m +\frac{r_3}{2}m(1-m^2)+\frac{1}{\sqrt{N}}\sqrt{2r_1+r_2+\frac{r_3}{2}(1-m^2)}\eta(t)$
+Ternary Model SDE:
+> ![equation](https://latex.codecogs.com/svg.latex?\Large&space;\frac{dm}{dt}%20=%20-2r_1m%20+\frac{r_3}{2}m(1-m^2)+\frac{1}{\sqrt{N}}\sqrt{2r_1+r_2+\frac{r_3}{2}(1-m^2)}\eta(t)) 
 
 ### This repository contains codes and data used for analysis in the article "Noise-Induced Effects in Collective Dynamics and Inferring Interactions from Data".
 
