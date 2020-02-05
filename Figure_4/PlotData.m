@@ -26,7 +26,7 @@ for i = 1:length(files)
 end
 %%
 files = dir(fullfile('data', 'varying_resolution_fine_*'));
-subplot(3,4,9);
+subplot(3,4,11);
 for i = 1:3
     load(['data/', files(i).name]);
     scatter(res, Diffusion_distance)
@@ -35,7 +35,7 @@ end
 xlim([40,200]);
 ylim([0,1]);
 title('Figure 4K');
-subplot(3,4,11);
+subplot(3,4,9);
 for i = 4:6
     load(['data/', files(i).name]);
     scatter(res, Diffusion_distance);
@@ -45,3 +45,22 @@ xlim([40,200]);
 ylim([0,1]);
 title('Figure 4I');
 %%
+files = dir(fullfile('data', 'varying_resolution_coarser_pairwise_N_*'));
+subplot(3,4,10);
+for i = 1:length(files)
+    load(fullfile('data', files(i).name))
+    scatter(Dt, dist_diff);
+    hold on; 
+end
+xlim([0,50])
+ylim([0,0.6])
+%%
+files = dir(fullfile('data','varying_resolution_coarser_trenary_N_*'));
+subplot(3,4,12);
+for i = 1:length(files)
+    load(fullfile('data', files(i).name))
+    scatter(Dt, dist_diff);
+    hold on; 
+end
+xlim([0,50])
+ylim([0,0.8])

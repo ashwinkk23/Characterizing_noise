@@ -3,7 +3,7 @@ clear;
 close all;
 %%
 addpath('codes');
-%% Pairwise Varying resolution
+%% Pairwise Fine Varying resolution 
 clear;
 tic
 N_list = [50, 100, 200]; 
@@ -18,7 +18,7 @@ for N = N_list
     save(['data/','varying_resolution_fine_pairwise_N_', num2str(N), '.mat'],'Diffusion_distance','res');
 end
 toc
-%% Trenary Varying Resolution
+%% Trenary Fine Varying Resolution
 clear;
 tic
 N_list = [50, 100, 200]; 
@@ -33,6 +33,34 @@ for N = N_list
     save(['data/','varying_resolution_fine_Ternary_N_', num2str(N), '.mat'],'Diffusion_distance','res');
 end
 toc
+%% Pairwise Coarser Varying Resolution
+N_list = [50, 100, 200];
+r1 = 0.01; 
+r2 = 1; 
+r3 = 0; 
+r4 = 0;
+Tint = 50;
+for N = N_list
+    disp(strcat('Running for N=', num2str(N)));
+    Gillespie_stochastic_process
+    disp('Running SDE');
+    SDE_continuous_Dt
+    save(['data/', 'varying_resolution_coarser_pairwise_N_', num2str(N)], 'dist_diff', 'Dt');
+end
+%% Ternary Coarser Varying Resolution
+N_list = [50, 100, 200];
+r1 = 0.01; 
+r2 = 1; 
+r3 = 0.08; 
+r4 = 0;
+Tint = 50;
+for N = N_list
+    disp(strcat('Running for N=', num2str(N)));
+    Gillespie_stochastic_process
+    disp('Running SDE');
+    SDE_continuous_Dt
+    save(['data/', 'varying_resolution_coarser_trenary_N_', num2str(N)], 'dist_diff', 'Dt');
+end
 %% Noise Analysis Pairwise
 clear;
 N = 50;
